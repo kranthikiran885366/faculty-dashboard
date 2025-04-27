@@ -1,3 +1,4 @@
+
 let userConfig = undefined
 try {
   // try to import ESM first
@@ -13,7 +14,6 @@ try {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -29,6 +29,7 @@ const nextConfig = {
     parallelServerCompiles: true,
   },
   basePath: '/faculty-dashboard',
+output: 'export'
 }
 
 if (userConfig) {
