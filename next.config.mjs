@@ -28,7 +28,7 @@ const nextConfig = {
     parallelServerCompiles: true,
   },
   output: 'export',
-  basePath: '/faculty-dashboard',
+  // basePath: '/faculty-dashboard',
 }
 
 if (userConfig) {
