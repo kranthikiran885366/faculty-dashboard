@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 if (!process.env.MONGO_URI) {
   throw new Error('Please define the MONGO_URI environment variable inside .env');
@@ -8,7 +8,7 @@ const MONGODB_URI = process.env.MONGO_URI;
 
 async function connectDB() {
   try {
-    const mongoose = await require('mongoose').connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI);
     console.log('MongoDB connected successfully');
     return mongoose;
   } catch (error) {
@@ -17,4 +17,4 @@ async function connectDB() {
   }
 }
 
-module.exports = connectDB; 
+export default connectDB; 
