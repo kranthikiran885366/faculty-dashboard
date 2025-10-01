@@ -44,6 +44,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
+      if (!auth) {
+        return {
+          success: false,
+          error: "Firebase authentication is not configured. Please set up Firebase environment variables.",
+        }
+      }
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       const firebaseUser = userCredential.user
       // Optionally get token
@@ -80,6 +86,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const loginWithGoogle = async () => {
     try {
+      if (!auth) {
+        return {
+          success: false,
+          error: "Firebase authentication is not configured. Please set up Firebase environment variables.",
+        }
+      }
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
       const firebaseUser = userCredential.user;
@@ -109,7 +121,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await signOut(auth)
+    if (auth) {
+      await signOut(auth)
+    }
     setUser(null)
     setToken(null)
     localStorage.removeItem("token")

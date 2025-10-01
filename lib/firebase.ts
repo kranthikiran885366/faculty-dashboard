@@ -1,6 +1,6 @@
 // Firebase configuration and initialization
-import { initializeApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, FirebaseApp } from "firebase/app";
+import { getAuth, Auth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,15 +12,14 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-if (!firebaseConfig.apiKey) {
-  throw new Error(
-    "FIREBASE CONFIG ERROR: apiKey is missing. Check your .env file and restart the dev server."
-  );
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+
+if (firebaseConfig.apiKey) {
+  app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+  auth = getAuth(app);
+} else {
+  console.warn("Firebase is not configured. Set NEXT_PUBLIC_FIREBASE_API_KEY and other Firebase environment variables to enable Firebase authentication.");
 }
-
-console.log("FIREBASE CONFIG:", firebaseConfig); // Debug print
-
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
-const auth = getAuth(app);
 
 export { auth };
